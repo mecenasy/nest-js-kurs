@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { ITask, TaskStatus } from '../model/task.model';
 import { User } from '../../user/entity/user.entity';
@@ -36,6 +38,12 @@ export class Task implements ITask {
 
   @Column()
   userId: string;
+
+  @CreateDateColumn()
+  createTime: Date;
+
+  @UpdateDateColumn()
+  updateTime: Date;
 
   @ManyToOne(() => User, (user) => user.tasks, { nullable: false })
   user: User;

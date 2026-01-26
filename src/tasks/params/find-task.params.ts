@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEnum, IsIn, IsOptional, IsString, MinLength } from 'class-validator';
 import { TaskStatus } from '../model/task.model';
 import { Transform } from 'class-transformer';
 
@@ -25,4 +25,13 @@ export class FindTaskParams {
       .filter((label) => label.length);
   })
   labels?: string[];
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['createdAt', 'updatedAt', 'title', 'description', 'status'])
+  sortBy?: string = 'createdAt';
+
+  @IsOptional()
+  @IsEnum(['ASC', 'DESC'])
+  sortOrder?: 'ASC' | 'DESC' = 'DESC';
 }

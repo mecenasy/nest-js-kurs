@@ -53,6 +53,10 @@ export class TasksService {
       // query.andWhere('labels.name IN (:...labels)', { labels: filters.labels });
     }
 
+    if (filters.sortBy && filters.sortOrder) {
+      query.orderBy(`task.${filters.sortBy}`, filters.sortOrder);
+    }
+
     if (pagination) {
       query.skip(pagination.offset).take(pagination.limit);
     }
