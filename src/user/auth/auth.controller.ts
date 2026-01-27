@@ -15,6 +15,7 @@ import { LoginDto } from '../dto/login.dto';
 import { IUser } from '../model/user.model';
 import { LoginResponse } from '../response/login.response';
 import { Expose } from 'class-transformer';
+import { Public } from 'src/decorators/public.decorator';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -22,13 +23,16 @@ import { Expose } from 'class-transformer';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('register')
+  @HttpCode(HttpStatus.CREATED)
   public async registerUser(
     @Body() registerUser: CreateUserDto,
   ): Promise<IUser> {
     return await this.authService.register(registerUser);
   }
 
+  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @Expose()

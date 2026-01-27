@@ -13,6 +13,7 @@ import { TokenService } from './auth/token.service';
 import { HashedPassword } from './entity/hashed-password.entity';
 import { AuthGuard } from './auth/user.guard';
 import { UserController } from './user.controller';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -34,6 +35,10 @@ import { UserController } from './user.controller';
     AuthService,
     TokenService,
     AuthGuard,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
   ],
   controllers: [UserController, AuthController],
 })
