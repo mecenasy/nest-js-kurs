@@ -1,17 +1,23 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { UniversityService } from './university.service';
 import { CreateDirectionDto } from './dto/create-direction.dto';
 import { CreateSpecialtyDto } from './dto/create-specialty.dto';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { CreateYearDto } from './dto/create-year.dto';
+import { UniversityMapResponse } from './response/university-map.response';
 
 @Controller('university')
 export class UniversityController {
   constructor(private readonly universityService: UniversityService) {}
 
+  @Get()
+  public async getUniversityMap(): Promise<UniversityMapResponse> {
+    return await this.universityService.getUniversityMap();
+  }
+
   @Post('direction')
-  public createDirection(@Body() dto: CreateDirectionDto) {
-    return this.universityService.createDirection(dto);
+  public async createDirection(@Body() dto: CreateDirectionDto) {
+    return await this.universityService.createDirection(dto);
   }
 
   @Post('specialty')
