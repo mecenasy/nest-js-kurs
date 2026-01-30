@@ -1,6 +1,6 @@
 export class IStudent {
   album: string;
-  studentId: string;
+  // studentId: string;
   direction: string;
   specialty: string;
   group: string;

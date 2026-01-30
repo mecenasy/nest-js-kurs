@@ -1,6 +1,12 @@
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 import { IStudent } from '../model/student.model';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
 
 @Entity()
@@ -11,7 +17,7 @@ export class Student implements IStudent {
 
   @IsString()
   @IsNotEmpty()
-  @Column()
+  @Column({ insert: false, update: false })
   studentId: string;
 
   @IsString()
@@ -39,6 +45,7 @@ export class Student implements IStudent {
   active: boolean;
 
   @IsNotEmpty()
-  @OneToOne(() => User, (user) => user.student)
+  @OneToOne(() => User, (user) => user.student, { eager: true })
+  @JoinColumn({ name: 'studentId' })
   student: User;
 }
